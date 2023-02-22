@@ -24,29 +24,38 @@ res.status(result.statusCode).json(result)
 })
 
 
-//login
-//deposit
-//withdraw
+//login  -get
+
+app.get('/login',(req,res)=>{
+
+    const result=dataservise.login(req.body.acno,req.body.psw)
+    
+    res.status(result.statusCode).json(result)
+
+    })
+
+//deposit  -post
+app.post('/deposit',(req,res)=>{
+
+    const result=dataservise.deposit(req.body.acnum,req.body.password,req.body.amount)
+
+    res.status(result.statusCode).json(result)
+
+})
+//withdraw -post
+app.post('/withdraw',(req,res)=>{
+
+    const result=dataservise.withdraw(req.body.acnum,req.body.password,req.body.amount)
+
+    res.status(result.statusCode).json(result)
+
+})
+
+
 //gerTransaction
 //delete
 
 
-// //request
-// app.get('/',(req,res)=>{
-//     res.send('Get Method...1')
-// })
-
-// app.post('/',(req,res)=>{
-//     res.send('Post Method...2')
-// })
-
-// app.put('/',(req,res)=>{
-//     res.send('Put Method...3')
-// })
-
-// app.patch('/',(req,res)=>{
-//     res.send('Patch Method...4')
-// })
-
 //create port 
+
 app.listen(3000,()=>{console.log("server started at port number 3000");} )
