@@ -61,4 +61,37 @@ methods
 .status(statusCode)      - change the response status code as statusCode
 
 
+Token in server
+===============
+JWT TOKEN - json web Token
+to install Token      - npm i jsonwebtoken
 
+-jsonwebtoken    - is a library
+-sign()          - method used to generate jwt token
+-verify()        - used to verify json web token
+
+ 
+token verification
+-------------------
+ middlewares-
+token verification can do using middlewares ,
+middlewares have the capacity to control server requests.
+-middleware is a funtion with three arguments:
+
+         -request
+         -response
+         -next
+
+ - two type of middleware:
+
+    1.Application Specific middleware   -work before all requestsin server
+    2.Router Specific middleware        -can apply to Specific request in server
+
+
+how to solve runtime errors in js
+----------------------------------
+try except 
+
+try   - error causing code 
+catch - error solve
+ 
