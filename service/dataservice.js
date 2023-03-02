@@ -1,31 +1,46 @@
 const jwt = require('jsonwebtoken')
+const db = require('./db.js')
 
-userDetails = {
-  1000: { acno: 1000, username: "anu", password: "abc123", balance: 0, transaction: [] },
-  1001: { acno: 1001, username: "amal", password: "abc123", balance: 0, transaction: [] },
-  1003: { acno: 1003, username: "arun", password: "abc123", balance: 0, transaction: [] },
-  1004: { acno: 1004, username: "akhil", password: "abc123", balance: 0, transaction: [] }
-}
+// userDetails = {
+//   1000: { acno: 1000, username: "anu", password: "abc123", balance: 0, transaction: [] },
+//   1001: { acno: 1001, username: "amal", password: "abc123", balance: 0, transaction: [] },
+//   1003: { acno: 1003, username: "arun", password: "abc123", balance: 0, transaction: [] },
+//   1004: { acno: 1004, username: "akhil", password: "abc123", balance: 0, transaction: [] }
+// }
 
 register = (uname, acno, psw) => {
-  if (acno in userDetails) {
-    return {
-      status: false,
-      message: 'user already exist',
-      statusCode: 401
+  // if (acno in userDetails) {
+
+  return db.User.findOne({acno}).then(user => {     //use .then cos its asynchronus function
+
+    if (user) {
+      return {
+        status: false,
+        message: 'user already exist',
+        statusCode: 401
+      }
+
+    } else {
+      //create a new user object in db
+
+      const newuser = new db.User({
+        acno, username: uname, password: psw, balance: 0, transaction: []
+      })
+
+      //to save in db
+      newuser.save()
+
+      return {
+        status: true,
+        message: 'register success',
+        statusCode: 200
+      }
+
     }
 
-  } else {
-    userDetails[acno] = { acno, username: uname, password: psw, balance: 0, transaction: [] }
-    //   console.log(userDetails);
-
-    return {
-      status: true,
-      message: 'register success',
-      statusCode: 200
-    }
-  }
+  })
 }
+
 
 login = (acno, psw) => {
 

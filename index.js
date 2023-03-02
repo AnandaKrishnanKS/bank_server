@@ -38,10 +38,14 @@ const jwtMiddleware = (req, res, next) => {
 //register  -post
 app.post('/register', (req, res) => {
 
-    const result = dataservise.register(req.body.uname, req.body.acno, req.body.psw)
+    dataservise.register(req.body.uname, req.body.acno, req.body.psw).then(result=>{
 
-    //convert object to json and send as response
+        //convert object to json and send as response
     res.status(result.statusCode).json(result)
+
+    })
+
+    
     // console.log(req.body);
     // res.send('success')
 })

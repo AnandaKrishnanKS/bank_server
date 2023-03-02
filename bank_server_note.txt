@@ -94,4 +94,59 @@ try except
 
 try   - error causing code 
 catch - error solve
+
+
+
+ Mongo   DB  -database
+ ======================
+
+ installation- mongodb server
+
+
+ shell commands
+ ---------------
+CRUD 
+
+
+-                         show dbs                                   - to see databases
+-                   use (database_name)                              - to open a database
+-                    show collections                                - to see collections inside db
+-               db.(collection_name).find()                          - to read all data in collection
+-          db.(collection_name).findOne(acno:1000)                   - to read single data
+- db.(collection_name).insertOne({"acno":1001,"name":"amal",....})   - create new data
+-       db.(collection_name).find({balace:{gt:4000}})                - find using a condition(using query selection operators)
+-      db.(collection_name).deleteOne({"uname":"anu"})               - used to delete (and an output 'delete count' will be obtain)
+- db.(collection_name).updateOne({uname:anu},{$set:{uname:Anu A}})   - update data
+
+
+register           - insertOne
+login              - findOne
+deposit            - updateOne
+withdraw           - updateOne
+transactionhistory - findOne
+delete             - deleteOne
  
+
+server Database integration
+-----------------------------
+
+database  -27017
+server    -3000
+
+mongoose - is a library used to server mdb integration
+
+installation - npm i mongoose
+
+
+steps
+------
+1.import mongoose
+2.state a connection string to integrate
+3.define a model for our collenction 
+
+
+
+
+
+
+
