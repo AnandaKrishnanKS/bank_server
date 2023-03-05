@@ -55,26 +55,32 @@ app.post('/register', (req, res) => {
 
 app.get('/login', (req, res) => {
 
-    const result = dataservise.login(req.body.acno, req.body.psw)
+    dataservise.login(req.body.acno, req.body.psw).then(result=>{
+        res.status(result.statusCode).json(result)
+    })
 
-    res.status(result.statusCode).json(result)
+   
 
 })
 
 //deposit  -post
 app.post('/deposit', jwtMiddleware, (req, res) => {
 
-    const result = dataservise.deposit(req.body.acnum, req.body.password, req.body.amount)
+    dataservise.deposit(req.body.acnum, req.body.password, req.body.amount).then(result=>{
+        res.status(result.statusCode).json(result)
+    })
 
-    res.status(result.statusCode).json(result)
+   
 
 })
 //withdraw -post
 app.post('/withdraw', jwtMiddleware, (req, res) => {
 
-    const result = dataservise.withdraw(req.body.acnum, req.body.password, req.body.amount)
+    dataservise.withdraw(req.body.acnum, req.body.password, req.body.amount).then(result=>{
+        res.status(result.statusCode).json(result)
+    })
 
-    res.status(result.statusCode).json(result)
+    
 
 })
 
@@ -82,9 +88,11 @@ app.post('/withdraw', jwtMiddleware, (req, res) => {
 //getTransaction
 app.get('/transaction', jwtMiddleware, (req, res) => {
 
-    const result = dataservise.getTransaction(req.body.acno)
+    dataservise.getTransaction(req.body.acno).then(result=>{
+        res.status(result.statusCode).json(result)
+    })
 
-    res.status(result.statusCode).json(result)
+   
 
 })
 

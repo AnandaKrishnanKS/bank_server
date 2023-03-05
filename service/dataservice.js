@@ -11,7 +11,7 @@ const db = require('./db.js')
 register = (uname, acno, psw) => {
   // if (acno in userDetails) {
 
-  return db.User.findOne({acno}).then(user => {     //use .then cos its asynchronus function
+  return db.User.findOne({ acno }).then(user => {     //use .then cos its asynchronus function
 
     if (user) {
       return {
@@ -44,9 +44,11 @@ register = (uname, acno, psw) => {
 
 login = (acno, psw) => {
 
-  if (acno in userDetails) {
-    if (psw == userDetails[acno]["password"]) {
-      currentUser = userDetails[acno]["username"]
+  // if (acno in userDetails) {
+
+  return db.User.findOne({ acno, password: psw }).then(user => {
+    if (user) {
+      currentUser = user.username
       currentAcno = acno
 
       const token = jwt.sign({ currentAcno }, "superkey123")
@@ -60,79 +62,71 @@ login = (acno, psw) => {
         token
 
       }
-
     } else {
       return {
         status: false,
-        message: 'incorrect password',
+        message: 'incorrect account number or password',
         statusCode: 401
       }
+
     }
-  } else {
-    return {
-      status: false,
-      message: 'incorrect account number',
-      statusCode: 401
-    }
-  }
+  })
+  // if (psw == userDetails[acno]["password"]) {
 
 }
 
 deposit = (acnum, password, amount) => {
   //to convert string into number
   var amnt = parseInt(amount)
-  if (acnum in userDetails) {
-    if (password == userDetails[acnum]["password"]) {
+  return db.User.findOne({ acno: acnum, password }).then(user => {
+
+    if (user) {
       //update balace
-      userDetails[acnum]["balance"] += amnt
-
+      user.balance += amnt
       //transaction data storage
-      userDetails[acnum]["transaction"].push({ Type: "Credit", amount: amnt })
+      user.transaction.push({ Type: "Credit", amount: amnt })
 
+      //to save data 
+      user.save()
 
-      //return balance
       return {
         status: true,
-        message: `${amnt} has been credited , current balance is ${userDetails[acnum]["balance"]}`,
+        message: `${amnt} has been credited , current balance is ${user.balance}`,
         statusCode: 200
       }
 
-
-
     } else {
+
       return {
         status: false,
-        message: 'incorrect password',
+        message: 'incorrect account number or password',
         statusCode: 401
       }
+
     }
-  } else {
-    return {
-      status: false,
-      message: 'incorrect account number',
-      statusCode: 401
-    }
-  }
+
+
+  })
 }
+
+// if (password == userDetails[acnum]["password"]) {
+
 
 withdraw = (acnum, password, amount) => {
 
   //to convert string into number
   var amnt = parseInt(amount)
-  if (acnum in userDetails) {
-    if (password == userDetails[acnum]["password"]) {
 
-      if (amnt <= userDetails[acnum]["balance"]) {
-        //update balace
-        userDetails[acnum]["balance"] -= amnt
+  return db.User.findOne({ acno: acnum, password }).then(user => {
 
-        //transaction data storage
-        userDetails[acnum]["transaction"].push({ Type: "Debit", amount: amnt })
-
-        //return balance
+    if (user) {
+      if (amnt <= user.balance) {
+        user.balance -= amnt
+        user.transaction.push({ Type: "Debit", amount: amnt })
+        user.save()
         return {
           status: true,
-          message: `${amnt} has been debited , current balance is ${userDetails[acnum]["balance"]}`,
+          message: `${amnt} has been debited ,current balance is ${user.balance}`,
           statusCode: 200
         }
       } else {
@@ -142,31 +136,30 @@ withdraw = (acnum, password, amount) => {
           statusCode: 401
         }
       }
-
     } else {
+
       return {
         status: false,
-        message: 'incorrect password',
+        message: 'incorrect account number or password',
         statusCode: 401
       }
     }
-  } else {
-    return {
-      status: false,
-      message: 'incorrect account number',
-      statusCode: 401
-    }
-  }
+
+  })
 }
 
+
 getTransaction = (acno) => {
+  return db.User.findOne({ acno }).then(user => {
 
-  return {
-    status: true,
-    statusCode: 200,
-    transaction: userDetails[acno]["transaction"]
-  }
-
+    if (user) {
+      return {
+        status: true,
+        statusCode: 200,
+        transaction: user.transaction
+      }
+    }
+  })
 
 }
 
