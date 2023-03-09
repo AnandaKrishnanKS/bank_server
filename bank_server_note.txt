@@ -127,8 +127,10 @@ transactionhistory - findOne
 delete             - deleteOne
  
 
+
+
 server Database integration
------------------------------
+============================
 
 database  -27017
 server    -3000
@@ -142,11 +144,18 @@ steps
 ------
 1.import mongoose
 2.state a connection string to integrate
-3.define a model for our collenction 
+3.define a model for our collenction (schema creation)
 
 
 
 
+FrontEnd server integration
+============================
+FrontEnd - 4200
+cors  - cross origin resource sharing - library used to FrontEnd server integration (4200 - 3000)
 
+steps
 
+ 1-import cors
+ 2-connection string
 

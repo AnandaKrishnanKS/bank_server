@@ -12,6 +12,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/bankServer',{useNewUrlParser:true})
 //schema means fields and values
 
 const User=mongoose.model('User',{
+    //schema eg:
     acno:Number, 
     username:String, 
     password:String, 

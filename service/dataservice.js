@@ -11,7 +11,7 @@ const db = require('./db.js')
 register = (uname, acno, psw) => {
   // if (acno in userDetails) {
 
-  return db.User.findOne({ acno }).then(user => {     //use .then cos its asynchronus function
+  return db.User.findOne({ acno }).then(user => {     //use .then cos its asynchronus function 
 
     if (user) {
       return {
@@ -160,7 +160,6 @@ getTransaction = (acno) => {
       }
     }
   })
-
 }
 
 module.exports = {

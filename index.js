@@ -1,6 +1,9 @@
 //import dataservise file
 const dataservise = require("./service/dataservice")
 
+//import cors
+const cors = require("cors")
+
 //import json web token
 const jwt = require('jsonwebtoken')
 
@@ -10,6 +13,9 @@ const express = require("express")
 
 //create app using express
 const app = express()
+
+//connection string to frontend integration
+app.use(cors({origin:'http://localhost:4200'}))
 
 //to parse json data from req body
 app.use(express.json())
