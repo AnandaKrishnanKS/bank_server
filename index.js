@@ -59,7 +59,7 @@ app.post('/register', (req, res) => {
 
 //login  -get
 
-app.get('/login', (req, res) => {
+app.post('/login', (req, res) => {
 
     dataservise.login(req.body.acno, req.body.psw).then(result=>{
         res.status(result.statusCode).json(result)
@@ -92,7 +92,7 @@ app.post('/withdraw', jwtMiddleware, (req, res) => {
 
 
 //getTransaction
-app.get('/transaction', jwtMiddleware, (req, res) => {
+app.post('/transaction', jwtMiddleware, (req, res) => {
 
     dataservise.getTransaction(req.body.acno).then(result=>{
         res.status(result.statusCode).json(result)
