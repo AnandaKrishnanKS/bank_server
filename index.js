@@ -103,6 +103,13 @@ app.post('/transaction', jwtMiddleware, (req, res) => {
 })
 
 //delete
+app.delete('/delete/:acno',jwtMiddleware,(req,res)=>{            // when delete is used data is passed as params not in header or body
+
+dataservise.deleteAcc(req.params.acno).then(result=>{
+    res.status(result.statusCode).json(result)
+})
+
+})     
 
 
 //create port 

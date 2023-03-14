@@ -162,10 +162,29 @@ getTransaction = (acno) => {
   })
 }
 
+deleteAcc=(acno)=>{
+  return db.User.deleteOne({acno}).then(user =>{
+    if(user){
+      return {
+        status:true,
+        statusCode:200,
+        message:'account deleted'
+      }
+    }else{
+      return{
+        status:false,
+        statusCode:401,
+        message:'account not deleted pls try again'
+      }
+    }
+  })
+}
+
 module.exports = {
   register,
   login,
   deposit,
   withdraw,
-  getTransaction
+  getTransaction,
+  deleteAcc 
 }
